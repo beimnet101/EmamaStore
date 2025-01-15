@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Container from "@/components/ui/container";
 import useCart from "@/hooks/use-cart";
@@ -6,15 +6,17 @@ import CartItem from "./components/cart-item";
 import Summary from "./components/summary";
 import { useEffect, useState } from "react";
 
-const CartPage = () => {
-   
-    const [isMounted,setIsMounted]=useState(false);
-    const cart = useCart();
-    useEffect(()=>{
-     setIsMounted(true);
-    },[]);
+export const dynamic = "force-dynamic";
 
-    if (!isMounted){
+const CartPage = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    const cart = useCart();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
         return null;
     }
 
@@ -43,6 +45,6 @@ const CartPage = () => {
             </Container>
         </div>
     );
-}
+};
 
 export default CartPage;
