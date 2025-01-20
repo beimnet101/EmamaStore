@@ -20,7 +20,7 @@ const Homepage: React.FC = async () => { // Add React.FC type
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
           <ProductList title="Featured Products" items={products} />
         </div>
-        <div className="animated-billboard transform transition-transform duration-300 hover:scale-110">
+        <div className="">
          <Billboard data={billboard2} />
         </div>
       </div>
