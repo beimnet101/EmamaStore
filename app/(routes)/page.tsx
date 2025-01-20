@@ -21,7 +21,7 @@ const Homepage: React.FC = async () => { // Add React.FC type
           <ProductList title="Featured Products" items={products} />
         </div>
         <div className="animated-billboard transform transition-transform duration-300 hover:scale-110">
-          <Billboard data={billboard2} />
+         <Billboard data={billboard2} />
         </div>
       </div>
     </Container>
