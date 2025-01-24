@@ -1,3 +1,4 @@
+"use client"
 import { Product } from "@/types";
 import Currency from "./currency";
 import Button from "./button";
