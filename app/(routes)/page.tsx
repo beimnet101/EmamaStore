@@ -8,8 +8,8 @@ export const revalidate = 0; // Ensure revalidation if necessary
 
 const Homepage: React.FC = async () => { // Add React.FC type
   const products = await getProducts({ isFeatured: true });
-  const billboard = await getBillboard("cm64q0eng0001l1033lioqb3h");
-  const billboard2 = await getBillboard("cm6514gmm0001la037e6l61li");
+  const billboard = await getBillboard("cm6g7t6ix0002cy4k29bigf3p");
+  const billboard2 = await getBillboard("cm6g7u1b20004cy4kr010z788");
 
   return (
     <Container>
