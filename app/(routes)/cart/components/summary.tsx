@@ -1,12 +1,15 @@
 "use client"; // This must be at the top
 import axios from "axios";
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import toast from "react-hot-toast";
 import getProducts from "@/actions/getServerProduct"; // Import the new getProducts action
+import { useUser } from '@clerk/nextjs';
+import { RedirectToSignIn } from "@clerk/nextjs";
+
 
 const Summary = () => {
   console.log("Rendering Summary component...");
@@ -14,7 +17,9 @@ const Summary = () => {
   const searchParams = useSearchParams();
   const cart = useCart();
   const items = cart.items;
+  const router =useRouter();
   const removeAll = useCart((state) => state.removeAll);
+  const { isSignedIn } = useUser();
 
   // Check payment status based on URL parameters
   useEffect(() => {
@@ -96,7 +101,14 @@ const Summary = () => {
       }
 
       console.log("Stock validation passed. Proceeding to checkout.");
-      const response = await axios.post(
+      if (!isSignedIn) {
+        // Store the current checkout page URL before redirecting
+        router.push(`/sign-in`);
+        return;
+      }
+      else{
+
+         const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
         {
           productIds: items.map((item) => item.id),
@@ -106,6 +118,7 @@ const Summary = () => {
 
       console.log("Checkout request successful:", response.data);
       window.location.href = response.data.url;
+    }
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");

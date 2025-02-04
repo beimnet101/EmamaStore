@@ -17,7 +17,7 @@ const CartItem: React.FC<CartItemsProps> = ({ data }) => {
     const [quantity, setQuantity] = useState("1"); // Default quantity is "1"
 
     const onRemove = () => {
-        cart.removeItem(data.id);
+        cart.removeItem(data.id);32
     };
 
     const onQuantityChange = (newQuantity: string) => {
