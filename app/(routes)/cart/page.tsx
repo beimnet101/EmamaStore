@@ -35,7 +35,7 @@ const CartPage = () => {
                         </div>
                         
                         {/* Summary section with reduced width */}
-                        <div className="lg:col-span-1 lg:max-w-xs">
+                        <div className="lg:col-span-1 lg:max-w-5xl h-full">
                             <Summary />
                         </div>
                     </div>

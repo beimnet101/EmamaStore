@@ -1,6 +1,6 @@
 "use client"; // This must be at the top
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
@@ -9,7 +9,8 @@ import toast from "react-hot-toast";
 import getProducts from "@/actions/getServerProduct"; // Import the new getProducts action
 import { useUser } from '@clerk/nextjs';
 import { RedirectToSignIn } from "@clerk/nextjs";
-
+import Image from "next/image";
+import { json } from "stream/consumers";
 
 const Summary = () => {
   console.log("Rendering Summary component...");
@@ -20,6 +21,8 @@ const Summary = () => {
   const router =useRouter();
   const removeAll = useCart((state) => state.removeAll);
   const { isSignedIn } = useUser();
+  const [selectedPayment, setSelectedPayment] = useState("stripe");
+ 
 
   // Check payment status based on URL parameters
   useEffect(() => {
@@ -106,7 +109,7 @@ const Summary = () => {
         router.push(`/sign-in`);
         return;
       }
-      else{
+      else if(selectedPayment=== "stripe"){
 
          const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
@@ -118,7 +121,25 @@ const Summary = () => {
 
       console.log("Checkout request successful:", response.data);
       window.location.href = response.data.url;
+    } 
+    else if(selectedPayment==="chapa"){
+        toast.error("chapa selected");
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/checkoutchapa`,
+            {
+              productIds: items.map((item) => item.id),
+              QuantityofOrderanItEm: items.map((item) => item.quantity),
+            }
+          );
+          console.error('Response:', response);
+         
+if (response.data.url) {
+  window.location.href = response.data.url;
+} else {
+  toast.error("Failed to initialize Chapa checkout.");
+}
     }
+
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
@@ -126,7 +147,7 @@ const Summary = () => {
   };
 
   return (
-    <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+    <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8" >
       <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
@@ -134,6 +155,56 @@ const Summary = () => {
           <Currency value={totalPrice} />
         </div>
       </div>
+
+          
+      <div className="mt-4">
+    <h3 className="text-md font-semibold text-gray-700">Choose Payment Method</h3>
+    <div className="mt-2 grid grid-cols-1 gap-4">
+
+        {/* Stripe Option */}
+        <button
+            onClick={() => setSelectedPayment("stripe")}
+            className={`flex items-center justify-start border rounded-lg pl-4 p-2 w-full transition-all duration-200 ease-in-out transform hover:shadow-lg ${ 
+                selectedPayment === "stripe" 
+                ? "bg-[#f9fafb]  border-black" 
+                : "bg-[#f9fafb] shadow-sm border-gray-200"
+            }`}
+        >
+            <Image
+                src="/stripepay.jpg"
+                alt="Stripe"
+                width={24}
+                height={24}
+                className="mr-3"
+            />
+            <span className="text-sm font-medium text-gray-800">Stripe</span>
+            {selectedPayment === "stripe" && <span className="ml-auto text-sm text-green-600">Default</span>}
+        </button>
+
+        {/* Chapa Option */}
+        <button
+            onClick={() => setSelectedPayment("chapa")}
+            className={`flex items-center justify-start border rounded-lg pl-4 p-2 w-full transition-all duration-200 ease-in-out transform hover:shadow-lg ${ 
+                selectedPayment === "chapa" 
+                ? "bg-[#f9fafb]  border-black" 
+                : "bg-[#f9fafb] border-gray-300"
+            }`}
+        >
+            <Image
+                src="/chapa-logo.jpg"
+                alt="Chapa"
+                width={24}
+                height={24}
+                className="mr-3"
+            />
+            <span className="text-sm font-medium text-gray-800">Chapa</span>
+            {selectedPayment === "chapa" && <span className="ml-auto text-sm text-green-600">Default</span>}
+        </button>
+
+    </div>
+</div>
+
+
       <Button
         disabled={items.length === 0}
         onClick={onCheckout}
