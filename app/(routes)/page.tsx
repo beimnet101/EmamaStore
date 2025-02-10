@@ -8,9 +8,10 @@ export const revalidate = 0; // Ensure revalidation if necessary
 
 const Homepage: React.FC = async () => { // Add React.FC type
   const products = await getProducts({ isFeatured: true });
-   const billboard = await getBillboard("cm6gg3alt0003cy2s0bfauihx");
-  const billboard2 = await getBillboard("cm6gg3alt0003cy2s0bfauihx");
  
+  const billboard = await getBillboard("cm6gg3alt0003cy2s0bfauihx");
+  const billboard2 = await getBillboard("cm6gg3alt0003cy2s0bfauihx");
+
   return (
     <Container>
       <div className="space-y-8 pb-10">
