@@ -216,43 +216,53 @@ if (response.data.url) {
 
     </div>
 </div>
- {/* Chapa Form */}
- {selectedPayment === "chapa" && (
-        <div className="mt-4">
-          <h3 className="text-md font-semibold text-gray-700">Billing Information</h3>
-          <div className="mt-2 space-y-4">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            />
-            <input
-              type="text"
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            />
-          </div>
-        </div>
+{selectedPayment === "chapa" && (
+  <div className="mt-4">
+    <h3 className="text-md font-semibold text-gray-700">Billing Information</h3>
+    <div className="mt-2 space-y-4">
+      <input
+        type="text"
+        placeholder="Full Name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+      <input
+        type="text"
+        placeholder="Last Name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+      <input
+        type="text"
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChange={(e) => {
+          const value = e.target.value;
+          // Allow only numbers
+          if (/^\d*$/.test(value) && value.length <= 10) {
+            setPhoneNumber(value);
+          }
+        }}
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+      {/* Validation Message */}
+      {phoneNumber && !/^(09|07)\d{8}$/.test(phoneNumber) && (
+        <p className="text-red-500 text-sm">
+          Phone number must start with 09 or 07 and be 10 digits
+        </p>
       )}
-
+      <input
+        type="text"
+        placeholder="Address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+    </div>
+  </div>
+)}
 
       <Button
         disabled={items.length === 0}
