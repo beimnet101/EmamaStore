@@ -26,7 +26,7 @@ const Summary = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
- 
+  const [loading, setLoading] = useState(false); 
 
   // Check payment status based on URL parameters
   useEffect(() => {
@@ -48,6 +48,8 @@ const Summary = () => {
 
   // Checkout logic
   const onCheckout = async () => {
+    if (loading) return;
+     setLoading(true);
     try {
       console.log("Starting checkout...");
 
@@ -120,6 +122,7 @@ const Summary = () => {
         {
           productIds: items.map((item) => item.id),
           QuantityofOrderanItEm: items.map((item) => item.quantity),
+         
         }
       );
 
@@ -132,8 +135,8 @@ const Summary = () => {
       toast.error("Please fill in all fields.");
       return;
     }
-        toast.error("chapa selected");
-        const response = await axios.post(
+      
+            const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/checkoutchapa`,
             {
               productIds: items.map((item) => item.id),
@@ -156,6 +159,8 @@ if (response.data.url) {
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -216,28 +221,29 @@ if (response.data.url) {
 
     </div>
 </div>
-{selectedPayment === "chapa" && (
-  <div className="mt-4">
-    <h3 className="text-md font-semibold text-gray-700">Billing Information</h3>
-    <div className="mt-2 space-y-4">
-      <input
-        type="text"
-        placeholder="Full Name"
-        value={fullName}
-        onChange={(e) => setFullName(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-lg"
-      />
-      <input
-        type="text"
-        placeholder="Last Name"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-lg"
-      />
-      <input
-        type="text"
-        placeholder="Phone Number"
-        value={phoneNumber}
+ {/* Chapa Form */}
+ {selectedPayment === "chapa" && (
+        <div className="mt-4">
+          <h3 className="text-md font-semibold text-gray-700">Billing Information</h3>
+          <div className="mt-2 space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phoneNumber}
         onChange={(e) => {
           const value = e.target.value;
           // Allow only numbers
@@ -245,32 +251,34 @@ if (response.data.url) {
             setPhoneNumber(value);
           }
         }}
-        className="w-full p-2 border border-gray-300 rounded-lg"
-      />
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
       {/* Validation Message */}
       {phoneNumber && !/^(09|07)\d{8}$/.test(phoneNumber) && (
         <p className="text-red-500 text-sm">
           Phone number must start with 09 or 07 and be 10 digits
         </p>
       )}
-      <input
-        type="text"
-        placeholder="Address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded-lg"
-      />
-    </div>
-  </div>
-)}
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </div>
+      )}
 
-      <Button
-        disabled={items.length === 0}
-        onClick={onCheckout}
-        className="w-full mt-6"
-      >
-        Checkout
-      </Button>
+
+<Button
+  disabled={items.length === 0 || loading}
+  onClick={onCheckout}
+  className="w-full mt-6"
+>
+  {loading ? "Checking out..." : "Checkout"}
+</Button>
+
     </div>
   );
 };
