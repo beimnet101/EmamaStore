@@ -22,6 +22,10 @@ const Summary = () => {
   const removeAll = useCart((state) => state.removeAll);
   const { isSignedIn } = useUser();
   const [selectedPayment, setSelectedPayment] = useState("stripe");
+  const [fullName, setFullName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
  
 
   // Check payment status based on URL parameters
@@ -122,13 +126,22 @@ const Summary = () => {
       console.log("Checkout request successful:", response.data);
       window.location.href = response.data.url;
     } 
-    else if(selectedPayment==="chapa"){
+    
+  else if(selectedPayment==="chapa"){
+    if (!fullName || !lastName || !phoneNumber || !address) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
         toast.error("chapa selected");
         const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/checkoutchapa`,
             {
               productIds: items.map((item) => item.id),
               QuantityofOrderanItEm: items.map((item) => item.quantity),
+              fullName,
+              lastName,
+              phoneNumber,
+              address,
             }
           );
           console.error('Response:', response);
@@ -203,6 +216,42 @@ if (response.data.url) {
 
     </div>
 </div>
+ {/* Chapa Form */}
+ {selectedPayment === "chapa" && (
+        <div className="mt-4">
+          <h3 className="text-md font-semibold text-gray-700">Billing Information</h3>
+          <div className="mt-2 space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </div>
+      )}
 
 
       <Button
