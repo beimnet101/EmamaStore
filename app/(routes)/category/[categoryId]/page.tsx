@@ -39,7 +39,9 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   return (
     <div className="bg-white">
       <Container>
+        <div className="animated-billboard transform transition-transform duration-300 hover:scale-110">
         <Billboard data={category.billboard} />
+        </div>
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             {/* Mobile filters */}
