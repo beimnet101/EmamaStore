@@ -41,8 +41,8 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
               key={index}
               className={`transition-transform duration-300 rounded-full shadow-md ${
                 currentIndex === index
-                  ? "h-5 w-5 bg-gray-900 scale-125" // Active: Larger, dark gray for all contrasts
-                  : "h-4 w-4 bg-gray-600" // Inactive: Dark gray and slightly smaller
+                  ? "h-2 w-2 bg-gray-900 scale-125" // Active: Larger, dark gray for all contrasts
+                  : "h-1 w-1 bg-gray-600" // Inactive: Dark gray and slightly smaller
               }`}
             />
           ))}
