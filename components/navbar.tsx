@@ -25,7 +25,7 @@ const Navbar = async () => {
         {/* Logo (Centered on Mobile Only) */}
 <Link
   href="/"
-  className="ml-11 flex gap-x-2 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 lg:static lg:translate-x-0"
+  className="ml-14 flex gap-x-2 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 lg:static lg:translate-x-0"
 >
   <p className="font-bold text-xl">EMAMA-STORE</p>
 </Link>
