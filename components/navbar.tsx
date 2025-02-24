@@ -1,4 +1,3 @@
-// app/components/navbar.tsx (Server Component)
 import Link from "next/link";
 import Container from "./ui/container";
 import MainNav from "./main-nav";
@@ -23,13 +22,14 @@ const Navbar = async () => {
           {/* Mobile Hamburger Menu */}
           <MobileMenu categories={categories} />
 
-          {/* Logo */}
-          <Link
-            href="/"
-            className="ml-4 flex lg:ml-0 gap-x-2 absolute left-1/2 transform -translate-x-1/2 lg:static lg:translate-x-0"
-          >
-            <p className="font-bold text-xl">EMAMA-STORE</p>
-          </Link>
+        {/* Logo (Centered on Mobile Only) */}
+<Link
+  href="/"
+  className="ml-11 flex gap-x-2 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 lg:static lg:translate-x-0"
+>
+  <p className="font-bold text-xl">EMAMA-STORE</p>
+</Link>
+
 
           {/* Main Navigation (Desktop Only) */}
           <div className="hidden lg:flex">
@@ -39,7 +39,7 @@ const Navbar = async () => {
           {/* Navbar Actions */}
           <div className="ml-auto flex items-center">
             <NavbarAction />
-            <div className="text-lg mt-2 ml-2 pr-0">
+            <div className="text-lg mt-2 ml-2 pr-4 sm:pr-0">
               <UserButton afterSignOutUrl="/" />
             </div>
           </div>
