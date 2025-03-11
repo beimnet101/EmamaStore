@@ -5,6 +5,8 @@ import getCategories from "@/actions/get-categories";
 import NavbarAction from "./navbar-action";
 import { UserButton } from "@clerk/nextjs";
 import MobileMenu from "./ui/MobileMenu";
+import SearchBar from "./searchBar";
+import MobileSearchMenu from "./ui/mobileSearchMenu";
 
 export const revalidate = 0;
 
@@ -21,20 +23,30 @@ const Navbar = async () => {
         <div className="relative sm:px-6 lg:px-8 flex h-16 items-center">
           {/* Mobile Hamburger Menu */}
           <MobileMenu categories={categories} />
+         
+      
 
-        {/* Logo (Centered on Mobile Only) */}
-<Link
-  href="/"
-  className="ml-14 flex gap-x-2 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 lg:static lg:translate-x-0"
->
-  <p className="font-bold text-xl">EMAMA-STORE</p>
-</Link>
-
+          {/* Logo (Centered on Mobile Only) */}
+          <Link
+            href="/"
+            className="ml-14 flex gap-x-2 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2 lg:static lg:translate-x-0"
+          >
+            <p className="font-bold text-xl">EMAMA-STORE</p>
+          </Link>
 
           {/* Main Navigation (Desktop Only) */}
           <div className="hidden lg:flex">
             <MainNav data={categories} />
           </div>
+         
+          {/* Search Input (Visible on Large Screens) */}
+          <div className="hidden lg:flex ml-8">
+            <SearchBar />
+          </div>
+          <div className="relative right-1 mt-2 ml-2">
+            <MobileSearchMenu/>
+          </div>
+      
 
           {/* Navbar Actions */}
           <div className="ml-auto flex items-center">
