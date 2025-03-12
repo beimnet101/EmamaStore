@@ -18,7 +18,7 @@ const GalleryTab: React.FC<GalleryTabProps> = ({ image }) => {
               fill
               src={image.url}
               alt="" // Ensure alt text is provided
-              className="object-cover object-center"
+              className="object-contain object-center"
             />
           </span>
           <span
