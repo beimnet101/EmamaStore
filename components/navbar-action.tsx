@@ -25,9 +25,10 @@ const NavbarAction = () => {
 
     return ( 
          <div className="ml-auto flex items-center gap-x-4">
-           <Button onClick={()=>router.push("/cart")} className="flex items-center rounded-full
-            bg-black px-4 py-2"
-    >
+         <Button
+  onClick={() => router.push("/cart")}
+  className="flex items-center rounded-full bg-black px-2 py-1 sm:px-4 sm:py-2" // Adjusted for consistent small screen padding
+>
             <ShoppingBag 
             size={20}
             color="white"
