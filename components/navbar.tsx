@@ -43,7 +43,7 @@ const Navbar = async () => {
           <div className="hidden lg:flex ml-8">
             <SearchBar />
           </div>
-          <div className="relative right-1 mt-2 ml-2">
+          <div className="relative pb-2 right-1 mt-2 ml-2">
             <MobileSearchMenu/>
           </div>
       
