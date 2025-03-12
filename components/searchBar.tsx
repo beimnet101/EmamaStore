@@ -82,23 +82,27 @@ const SearchBar: React.FC<SearchBarProps> = ({ isMobileSearch = false, onProduct
 
   return (
     <form onSubmit={handleSearch} className="relative w-64">
+      
       <div className="relative">
+        
       {isMobileSearch ? ( // Conditionally render the mobile layout
           <div className="flex items-center">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search for products..."
-              value={query}
-              onChange={handleInputChange}
-              className="w-full bg-transparent outline-none pr-10"
-            />
+            
             <button
               type="submit"
-              className="text-gray-500 hover:text-blue-500" // Removed absolute positioning
+              className="mr-2 text-gray-500 hover:text-blue-500" // Removed absolute positioning
             >
               <Search size={20} />
             </button>
+            <input
+  type="text"
+  name="search"
+  placeholder="Search"
+  value={query}
+  onChange={handleInputChange}
+  className="w-full bg-transparent outline-none pr-10 placeholder:text-gray-500 font-bold text-lg" // Added text-lg
+/>
+           
           </div>):(
      
         <Input
@@ -123,7 +127,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isMobileSearch = false, onProduct
         </button>
 }
         {/* Spinner Loader */}
-        {loading && (
+        {!isMobileSearch && loading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
             <svg
               className="animate-spin h-4 w-4 text-blue-500"
@@ -148,6 +152,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isMobileSearch = false, onProduct
           </div>
         )}
 
+       
         {/* Autocomplete Dropdown */}
         {!isMobileSearch && suggestions.length > 0 && (
           <ul className="absolute left-0 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-50">
@@ -155,30 +160,65 @@ const SearchBar: React.FC<SearchBarProps> = ({ isMobileSearch = false, onProduct
               <li
                 key={product.id}
                 onClick={() => handleSuggestionClick(product)}
-                className="p-2 cursor-pointer hover:bg-blue-100 text-gray-800 transition duration-150 ease-in-out"
+                className="p-2 cursor-pointer hover:bg-grey-100 text-gray-800 transition duration-150 ease-in-out"
               >
                 {product.name}
               </li>
             ))}
           </ul>
         )}
-   {/* Display Suggestions on the Page for Mobile */}
-   {isMobileSearch && suggestions.length > 0 && (
-        <div className="mt-4 w-full">
-          {suggestions.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => handleSuggestionClick(product)}
-              className="p-2 cursor-pointer hover:bg-blue-100 text-gray-800 transition duration-150 ease-in-out border-b border-gray-200"
-            >
-              {product.name}
-            </div>
-          ))}
-        </div>
-      )}
-
-
-      </div>
+   
+      {/* Display Suggestions on the Page for Mobile */}
+      {isMobileSearch && (
+          <div className="mt-4 w-full">
+            {loading && (
+              <div className="flex justify-center p-2 z-50">{" "}
+                {/* Added z-50 */}
+                <svg
+                  className="animate-spin h-4 w-4 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              </div>
+            )}
+            {suggestions.length > 0 && (
+              <div>
+                   { <div className="p-4">
+              <p className="text-lg font-semibold mb-4">Suggested Searches</p>
+             
+            </div> }
+                {suggestions.map((product) => (
+                   
+                    <div
+                      key={product.id}
+                      onClick={() => handleSuggestionClick(product)}
+                      className="p-2 cursor-pointer hover:bg-blue-100 text-gray-800 transition duration-150 ease-in-out border-b border-gray-200"
+                    >
+                       <span className="text-gray-500 mr-2"></span> {/* Added Q icon */}
+                  
+                    {product.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+    </div>
     </form>
   );
 };
