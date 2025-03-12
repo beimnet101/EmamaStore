@@ -31,7 +31,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
           src={images[currentIndex].url}
           alt="Swipeable Image"
           fill
-          className="object-cover object-center"
+          className="object-contain object-center"
         />
 
         {/* Swipe Indicators (Circles) */}
@@ -67,7 +67,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
                 fill
                 src={image.url}
                 alt="Image"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
             </div>
           </Tab.Panel>
