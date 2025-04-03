@@ -8,6 +8,8 @@ import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@c
 
 import ToastProvider from "@/providers/toast-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import PageLoader from "@/components/pageLoader";
+import { LoadingProvider } from "@/providers/loading-provider";
 
 const font =Urbanist({subsets: ["latin"]});
 export const metadata: Metadata = {
@@ -26,12 +28,15 @@ export default function RootLayout({
       <body
         className={font.className}
       >
-        
+        <LoadingProvider>
         <ModalProvider/>
         <ToastProvider/>
         <Navbar/>
+        <PageLoader /> 
         {children}
         <Footer/>
+        </LoadingProvider>
+
       
 
       </body>

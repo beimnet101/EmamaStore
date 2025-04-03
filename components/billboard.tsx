@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { Billboard as BillboardType } from "@/types";
 import React, { useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
@@ -63,8 +62,13 @@ const Billboard: React.FC<BillboardProps> = ({ data }) => {
         className="rounded-xl relative aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover"
         style={{ backgroundImage: !isVideo ? `url(${data?.imageUrl})` : undefined }}
       >
+        {/* Show Skeleton if it is a video and not yet loaded */}
+        {isVideo && !isLoaded && (
+          <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+        )}
+
         {isVideo ? (
-          <div className="relative w-full h-full">
+          <div className={`relative w-full h-full ${!isLoaded ? "invisible" : "visible"}`}>
             <video
               ref={videoRef}
               className="h-full w-full object-cover"
@@ -135,4 +139,3 @@ const Billboard: React.FC<BillboardProps> = ({ data }) => {
 };
 
 export default Billboard;
-
