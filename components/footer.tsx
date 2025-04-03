@@ -18,7 +18,7 @@ const Footer = () => {
     <footer className="bg-[#f0f0f0] text-black font-sans text-xs">
       <div className="container mx-auto py-6 sm:py-10 space-y-4 sm:space-y-6">
         <div className="text-center text-xs leading-5">
-          <p>&copy; 2025 Emashop, Inc. All rights reserved.</p>
+          <p>&copy; 2025 EmamaShop, Inc. All rights reserved.</p>
           <p>
             <button onClick={() => scrollToSection(privacyRef)}>Privacy Policy</button> |
             <button onClick={() => scrollToSection(termsRef)}>Terms of Use</button> |
@@ -35,7 +35,7 @@ const Footer = () => {
             <p>2. Returns and Refunds: You may return most items within 30 days of delivery for a full refund. Items must be returned in new, unused condition. Some restrictions may apply.</p>
             <p>3. Shipping Information: We offer various shipping options, including standard and expedited shipping, depending on your location and the availability of items.</p>
             <p>4. Product Availability: All products are subject to availability and may be limited in quantity. We reserve the right to cancel or modify orders as necessary.</p>
-            <p>5. Emashop Card: Emashop Card is available for qualifying customers in the Ethiopia and United States. Add your Emashop Card to Wallet on supported devices for easy payments.</p>
+            <p>5. EmamaShop Card: EmamaShop Card is available for qualifying customers in the Ethiopia and United States. Add your EmamaShop Card to Wallet on supported devices for easy payments.</p>
             <p>6. Terms and Conditions: By using our services, you agree to our Terms of Use. Features, applications, and services may vary by region. Policies are subject to change without prior notice.</p>
           </div>
 
@@ -63,18 +63,18 @@ const Footer = () => {
 
           <div ref={legalRef} className="bg-[#f0f0f0] p-4 sm:p-6">
             <h4 className="font-semibold mb-2">Legal Information</h4>
-            <p>1. Company name: Emashop, Inc.</p>
+            <p>1. Company name: EmamaShop, Inc.</p>
             <p>2. Address: Addis Ababa, Ethiopia.</p>
             <p>3. Contact: emamashop@gmail.com.</p>
             <p>4. Disclaimers: Information provided is for general knowledge only.</p>
             <p>5. Liability: We are not liable for indirect damages.</p>
-            <p>6. Copyright: All content is copyright of Emashop, Inc.</p>
+            <p>6. Copyright: All content is copyright of EmamaShop, Inc.</p>
           </div>
 
           <div className="p-4 sm:p-6">
             <p>Shipping: standard and expedited options, costs and times vary. Tracking provided.</p>
             <p>Availability: subject to availability. Orders may be modified or canceled.</p>
-            <p>Emashop Card: for US and Ethiopia. Apply online, add to wallet.</p>
+            <p>EmamaShop Card: for US and Ethiopia. Apply online, add to wallet.</p>
           </div>
         </div>
       </div>
